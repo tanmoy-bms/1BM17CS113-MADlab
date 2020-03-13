@@ -1,0 +1,225 @@
+----------XML FILE---------------
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+
+    android:background="#D3D3D3"
+
+    android:orientation="vertical"
+
+    tools:context=".MainActivity">
+
+
+
+    <TextView
+
+        android:id="@+id/textview"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="160dp"
+
+        android:layout_marginTop="100dp"
+
+        android:text="CSE"
+
+        android:textSize="24sp"
+
+        android:textStyle="bold" />
+
+
+
+    <Button
+
+        android:id="@+id/button"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="20dp"
+
+        android:layout_marginTop="50dp"
+
+        android:layout_marginRight="20dp"
+
+        android:background="#808080"
+
+        android:text="CHANGE FONT SIZE"
+
+        android:textSize="24sp" />
+
+
+
+    <Button
+
+        android:id="@+id/button2"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="20dp"
+
+        android:layout_marginTop="50dp"
+
+        android:layout_marginRight="20dp"
+
+        android:background="#808080"
+
+        android:text="CHANGE COLOR"
+
+        android:textSize="24sp" />
+
+
+
+    <Button
+
+        android:id="@+id/button3"
+
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="20dp"
+
+        android:layout_marginTop="50dp"
+
+        android:layout_marginRight="20dp"
+
+        android:background="#808080"
+
+        android:text="toggle cs/is"
+
+        android:textSize="24sp" />
+
+
+
+</LinearLayout>
+
+------------------------------MAIN.java FILE--------------------------------
+
+package com.example.fontcheck106;
+import androidx.appcompat.app.AppCompatActivity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+
+
+public class MainActivity extends AppCompatActivity {
+
+Button bt1,bt2,bt3;
+
+TextView tv;
+
+float font=30;
+
+int ch=1;
+
+    @Override
+
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        bt1=findViewById(R.id.button);
+
+        bt2=findViewById(R.id.button2);
+
+        bt3=findViewById(R.id.button3);
+
+        tv=findViewById(R.id.textview);
+
+        bt1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+                tv.setTextSize(font);
+
+                font=font+5;
+
+                if(font==50)
+
+                {
+
+                    font=30;
+
+                }
+
+            }
+
+        });
+
+        bt2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+                switch(ch)
+
+                {
+
+                    case 1:tv.setTextColor(Color.RED);break;
+
+                    case 2:tv.setTextColor(Color.BLUE);break;
+
+                    case 3:tv.setTextColor(Color.YELLOW);break;
+
+                    case 4:tv.setTextColor(Color.GREEN);break;
+
+                    case 5:tv.setTextColor(Color.MAGENTA);break;
+
+
+
+                }
+
+                ch++;
+
+                if(ch==6)
+
+                    ch=1;
+
+            }
+
+        });
+
+        bt3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+
+            public void onClick(View v) {
+
+                if(tv.getText()=="CSE")
+
+                    tv.setText("ISE");
+
+                else
+
+                    tv.setText("CSE");
+
+            }
+
+        });
+
+    }
+
+}
