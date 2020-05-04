@@ -1,13 +1,14 @@
 package com.example.lab8;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -18,10 +19,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
-    EditText e1;
+
+    EditText input_txt;
+    TextView output_txt;
     Button read, write, clear;
-    private String filename = "SampleFile.txt";
-    private String filepath = "MyFileStorage";
+    private String filename = "cse.txt";
+    private String filepath = "BMSCE";
     File myFile;
 
     @Override
@@ -29,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        e1 = (EditText) findViewById(R.id.editText);
-        write = (Button) findViewById((R.id.button));
-        read = (Button) findViewById(R.id.button2);
-        clear = (Button) findViewById(R.id.button3);
-
+        input_txt = (EditText) findViewById(R.id.editText);
+        write = (Button) findViewById((R.id.write_b));
+        read = (Button) findViewById(R.id.read_b);
+        clear = (Button) findViewById(R.id.clear_b);
+        output_txt = (TextView) findViewById(R.id.textView);
 
         if (!isExternalStorageAvailable() || isExternalStorageReadOnly()) {
             write.setEnabled(false);
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg = e1.getText().toString();
+                String msg = input_txt.getText().toString();
                 try {
                     FileOutputStream fo = new FileOutputStream(myFile);
                     fo.write(msg.getBytes());
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     while ((message = br.readLine()) != null) {
                         buf += message;
                     }
-                    e1.setText(buf);
+                    output_txt.setText(buf);
                     br.close();
                     fin.close();
                     Toast.makeText(getBaseContext(), "Data Recived from SDCARD", Toast.LENGTH_LONG).show();
@@ -83,12 +86,14 @@ public class MainActivity extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                e1.setText("");
+                input_txt.setText(" ");
+                output_txt.setText(" ");
             }
         });
+
     }
 
-    private static boolean isExternalStorageReadOnly() {
+    private boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
             return true;
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private static boolean isExternalStorageAvailable() {
+    private boolean isExternalStorageAvailable() {
         String extStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
             return true;
